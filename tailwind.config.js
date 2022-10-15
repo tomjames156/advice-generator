@@ -10,7 +10,16 @@ module.exports = {
       'green-bg': '#53ffa9',
       'whitish-text': "#cde4e9"
     },
-    extend: {},
+    screens: {
+      'sm': '500px',
+      'md': '768px',
+      'lg': '1024px'
+    },
+    extend: {
+      boxShadow:{
+        'dice': '0 0 15px #53ffa9'
+      }
+    },
   },
   plugins: [],
 }
