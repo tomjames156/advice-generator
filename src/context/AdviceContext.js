@@ -1,25 +1,28 @@
 import {createContext, useEffect, useState} from "react";
-
 const AdviceContext = createContext();
 
-export function AdviceProvider({children}) {
-    const [advice, setAdvice] = useState("");
+function AdviceProvider({children}) {
+    const [advice, setAdvice] = useState({});
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
-        getAdvice()
+        getAdvice();
     }, []);
 
     const getAdvice = async () => {
+        setIsLoading(true);
         const response = await fetch("https://api.adviceslip.com/advice");
-        const data = await response.json();
-        setAdvice(data);
+        const slip = await response.json();
+        setAdvice(slip);
+        setIsLoading(false);
     }
     return (
         <AdviceContext.Provider value={{
-            advice}}>
-            {children}
+            advice, isLoading, getAdvice
+        }}>{children}
         </AdviceContext.Provider>
     )
 }
 
 export default AdviceContext;
+export {AdviceProvider};

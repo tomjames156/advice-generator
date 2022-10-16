@@ -1,20 +1,32 @@
-import AdviceContext from "./context/AdviceContext";
-import {useContext} from "react";
+import {useEffect, useState} from "react";
+import Spinner from "./components/Spinner";
+// import AdviceContext from "./context/AdviceContext";
 
 function App() {
-  const advice = useContext(AdviceContext);
-  // "It is easy to sit up and take notice what is difficult is getting up and taking action"
+  // const {advice, isLoading, getAdvice} = useContext(AdviceContext);
+  const [isLoading, setIsLoading] = useState(false);
+  const [advice, setAdvice] = useState({});
+
+  useEffect(() => {getAdvice()}, []);
+
+  const getAdvice = async () => {
+    setIsLoading(true);
+    const response = await fetch(`https://api.adviceslip.com/advice`);
+    const {slip} = await response.json();
+    setAdvice(slip);
+    setIsLoading(false);
+  }
 
   return (
     <div className="bg-dark-bg w-screen h-screen grid grid-cols-1 justify-center items-center">
       <div className="w-[24rem] h-[15rem] relative mx-auto bg-gray-bg p-4 flex flex-col gap-4 text-center rounded-xl sm:w-[25rem] sm:h-[15rem]">
-        <h2 className="text-green-bg text-[0.8rem]">ADVICE #117</h2>
-        <p className="text-whitish-text font-bold text-xl indent-[2.5rem]">{advice}</p>
-        <img className="mt-4 md:block sm:hidden lg:block" src="images/pattern-divider-desktop.svg" alt="screen-divider"/>
-        <img className="mt-4 sm:block md:hidden lg:hidden" src="images/pattern-divider-mobile.svg" alt="screen-divider"/>
-        <div className="absolute mx-[10.25rem] align-center flex justify-center p-3 -bottom-4 bg-green-bg rounded-full hover:shadow-dice cursor-pointer">
-          <img className="w-4" src="images/icon-dice.svg" alt="advice-die" />
-        </div>
+      <h2 className="text-green-bg text-[0.8rem]">ADVICE #{!isLoading? advice.id: "..."}</h2>
+      {!isLoading ? <p className="text-whitish-text font-bold text-xl indent-[2.5rem]">"{advice.advice}"</p>: <Spinner/>}
+      <img className="mt-4 md:block sm:hidden lg:block" src="images/pattern-divider-desktop.svg" alt="screen-divider"/>
+      <img className="mt-4 sm:block md:hidden lg:hidden" src="images/pattern-divider-mobile.svg" alt="screen-divider"/>
+      <div className="absolute mx-[10.25rem] align-center flex justify-center p-3 -bottom-4 bg-green-bg rounded-full hover:shadow-dice cursor-pointer">
+        <img className="w-4" src="images/icon-dice.svg" onClick={getAdvice} alt="advice-die" />
+      </div>
       </div>
     </div>
   );
