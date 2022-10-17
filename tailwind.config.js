@@ -11,7 +11,7 @@ module.exports = {
       'whitish-text': "#cde4e9"
     },
     screens: {
-      'sm': '500px',
+      // 'sm': '400px',
       'md': '768px',
       'lg': '1024px'
     },
