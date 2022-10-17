@@ -14,7 +14,7 @@ function App() {
       {!isLoading ? <p className="text-whitish-text font-bold text-xl indent-[2.5rem]">"{advice.advice}"</p>: <Spinner/>}
       <img className="my-4 sm:hidden" src="images/pattern-divider-desktop.svg" alt="screen-divider"/>
       <img className="mt-4 mb-1 hidden sm:block" src="images/pattern-divider-mobile.svg" alt="screen-divider"/>
-      <div className="absolute mx-[10.25rem] align-center flex justify-center p-3 -bottom-4 bg-green-bg rounded-full hover:shadow-dice cursor-pointer sm:mx-[10rem]">
+      <div className="absolute mx-[10.25rem] align-center flex justify-center p-3 -bottom-4 bg-green-bg rounded-full hover:shadow-dice cursor-pointer sm:mx-[7.5rem]">
         <img className="w-4" src="images/icon-dice.svg" onClick={getAdvice} alt="advice-die" />
       </div>
       </div>
